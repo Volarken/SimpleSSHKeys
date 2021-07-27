@@ -5,15 +5,15 @@
 #############################
 func_logEvent () {
 TIME0=$(date)
-mkdir -p $HOME/sshkey
-LOGFILE="$HOME/sshkey/log.txt"
+mkdir -p /usr/bin/sshkey
+LOGFILE="/usr/bin/sshkey/log.txt"
 sudo /bin/cat <<-EOM >>$LOGFILE
         $LogInput $TIME0
 			EOM
 }
 func_autoUpdate(){
 version=$(curl -s https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt)
-versionCurrent="$(cat $HOME/sshkey/version.txt)"
+versionCurrent="$(cat /usr/bin/sshkey/version.txt)"
 clear
 if [ "$versionCurrent" = "$version" ]; then
 LogInput="Script up to date, last update check ran on "
@@ -21,7 +21,8 @@ func_logEvent
 else
 LogInput="Script is outdated, running update protocols on "
 func_logEvent
-sudo -s curl https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt -o $HOME/sshkey/version.txt > /dev/null
+mkdir -p ~/.ssh/keys
+sudo -s curl https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt -o /usr/bin/sshkey/version.txt > /dev/null
 sudo -s curl -L https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/sshkey.sh -o "$0" > /dev/null
 clear
 sudo bash "$0"
@@ -29,10 +30,10 @@ fi
 }
 
 function_enableKeys() {
-rm /home/user/.ssh/authorized_keys
-for file in ls /home/user/.ssh/keys/*
+rm ~/.ssh/authorized_keys
+for file in ls ~/.ssh/keys/*
 do
-  ssh-keygen -i -f "$file" >> /home/user/.ssh/authorized_keys
+  ssh-keygen -i -f "$file" >> ~/.ssh/authorized_keys
   done
   LogInput="Authorization file updated..."
   func_logEvent
@@ -44,12 +45,12 @@ do
 
 function_removeKey() {
 echo "Here is a list of our current keys... "
-ls /home/user/.ssh/keys
+ls ~/.ssh/keys
 sleep 2;
 echo "Which key would you like to remove?"
 echo "If none, press enter"
 read -p '' -e REMOVE
-rm /home/user/.ssh/keys/$REMOVE
+rm ~/.ssh/keys/$REMOVE
 LogInput="SSH Key $REMOVE has been deleted!"
 func_logEvent
 echo $LogInput
@@ -69,8 +70,8 @@ function_addKey() {
 echo "Please copy your key to the clipboard and prepare to paste into nano..."
 echo "What would you like to name this key?"
 read -p "" -e NAME
-nano /home/user/.ssh/keys/$NAME
-if test -f /home/user/.ssh/keys/$NAME
+nano ~/.ssh/keys/$NAME
+if test -f ~/.ssh/keys/$NAME
 then
 LogInput="SSH Key $NAME has been successfully added!"
 else
