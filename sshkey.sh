@@ -5,15 +5,15 @@
 #############################
 func_logEvent () {
 TIME0=$(date)
-mkdir -p /usr/bin/sshkey
-LOGFILE="/usr/bin/sshkey/log.txt"
+mkdir -p $HOME/sshkey
+LOGFILE="$HOME/sshkey/log.txt"
 sudo /bin/cat <<-EOM >>$LOGFILE
         $LogInput $TIME0
 			EOM
 }
 func_autoUpdate(){
 version=$(curl -s https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt)
-versionCurrent="$(cat /usr/bin/sshkey/version.txt)"
+versionCurrent="$(cat $HOME/sshkey/version.txt)"
 clear
 if [ "$versionCurrent" = "$version" ]; then
 LogInput="Script up to date, last update check ran on "
@@ -22,7 +22,7 @@ else
 LogInput="Script is outdated, running update protocols on "
 func_logEvent
 mkdir -p ~/.ssh/keys
-sudo -s curl https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt -o /usr/bin/sshkey/version.txt > /dev/null
+sudo -s curl https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt -o $HOME/sshkey/version.txt > /dev/null
 sudo -s curl -L https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/sshkey.sh -o "$0" > /dev/null
 clear
 sudo bash "$0"
