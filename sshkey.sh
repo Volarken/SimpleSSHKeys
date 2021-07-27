@@ -1,6 +1,6 @@
 #bin/bash
 #############################
-##Built by LukeSwetnam.com###
+##Built by github.com/Volarken###
 ######Public Release 1.0####
 #############################
 func_logEvent () {
