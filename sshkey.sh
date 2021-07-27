@@ -7,7 +7,7 @@ func_logEvent () {
 TIME0=$(date)
 mkdir -p /usr/bin/sshkey
 LOGFILE="/usr/bin/sshkey/log.txt"
-sudo /bin/cat <<-EOM >>$LOGFILE
+  /bin/cat <<-EOM >>$LOGFILE
         $LogInput $TIME0
 			EOM
 }
