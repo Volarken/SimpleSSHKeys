@@ -1,15 +1,32 @@
 #bin/bash
 #############################
 ##Built by LukeSwetnam.com###
+######Public Release 1.0####
 #############################
 func_logEvent () {
 TIME0=$(date)
-LOGFILE="/var/sshkeylog.txt"
+mkdir -p /home/$USER/sshkey
+LOGFILE="home/$USER/sshkey/log.txt"
 sudo /bin/cat <<-EOM >>$LOGFILE
         $LogInput $TIME0
 			EOM
 }
-
+func_autoUpdate(){
+version=$(curl -s https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt)
+versionCurrent="$(cat /home/$USER/sshkey/version.txt)"
+clear
+if [ "$versionCurrent" = "$version" ]; then
+LogInput="Script up to date, last update check ran on "
+func_logEvent
+else
+LogInput="Script is outdated, running update protocols on "
+func_logEvent
+sudo -s curl https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/version.txt -o /home/$USER/sshkey/version.txt > /dev/null
+sudo -s curl -L https://raw.githubusercontent.com/Volarken/SimpleSSHKeys/main/sshkey.sh -o "$0" > /dev/null
+clear
+sudo bash "$0"
+fi
+}
 
 function_enableKeys() {
 rm /home/user/.ssh/authorized_keys
@@ -112,5 +129,5 @@ echo "Goodbye"
 exit
 fi
 }
-
+func_autoUpdate
 func_mainMenu
