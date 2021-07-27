@@ -1,7 +1,7 @@
 #bin/bash
 #############################
 ##Built by github.com/Volarken###
-######Public Release 1.0####
+######Public Release 1.1####
 #############################
 func_logEvent () {
 TIME0=$(date)
