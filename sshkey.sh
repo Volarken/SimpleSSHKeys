@@ -30,7 +30,7 @@ fi
 }
 
 function_enableKeys() {
-rm ~/.ssh/authorized_keys > /dev/null 2&1
+rm ~/.ssh/authorized_keys > /dev/null
 for file in ls ~/.ssh/keys/* 
 do
   ssh-keygen -i -f "$file" >> ~/.ssh/authorized_keys
