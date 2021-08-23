@@ -31,7 +31,7 @@ fi
 
 function_enableKeys() {
 rm ~/.ssh/authorized_keys
-for file in ls ~/.ssh/keys/*
+for file in ls ~/.ssh/keys/* >> /dev/null
 do
   ssh-keygen -i -f "$file" >> ~/.ssh/authorized_keys
   done
@@ -45,7 +45,7 @@ do
 
 function_removeKey() {
 echo "Here is a list of our current keys... "
-ls ~/.ssh/keys 1&2>/dev/null
+ls ~/.ssh/keys
 sleep 2;
 echo "Which key would you like to remove?"
 echo "If none, press enter"
