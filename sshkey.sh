@@ -89,7 +89,7 @@ fi
 function_enableKeys
 }
 
-func_mainRun() {
+func_mainRun() { 
 echo "$(tput setaf 2)"
 echo -e "
 Welcome to the Linux SSH Key Management System\n\n\
@@ -116,19 +116,6 @@ exit
 fi
 }
 
-func_mainMenu() {
-echo "Welcome to Authorized Key Management Script, HOW TO USE:"
-echo "All keys inside of .ssh/keys will be authorized when you run this script, as well any keys removed from .ssh/keys will be deauthorized."
-echo "Would you like to run this now?"
-echo "Y/N"
-read -p '' -e qValue
-echo ""
-if [[ "$qValue" == "Y" || "$qValue" == "y" ]]; then
-func_mainRun
-else
-echo "Goodbye"
-exit
-fi
-}
 func_autoUpdate
-func_mainMenu
+func_mainRun
+#func_mainMenu
